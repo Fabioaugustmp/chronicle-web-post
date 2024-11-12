@@ -18,11 +18,11 @@ Para configurar o banco de dados, siga as instruções abaixo para criar as tabe
 
 2. **Crie o banco de dados (caso ainda não exista)**  
 ```sql 
-   CREATE DATABASE chronicle_db;
+CREATE DATABASE chronicle_db;
 ```
 3. **Use o banco de dados**
-  ```sql 
-  USE chronicle_db;
+```sql 
+USE chronicle_db;
 ```
 4. **Crie a tabela posts**
    Execute o seguinte comando para criar a tabela posts:
