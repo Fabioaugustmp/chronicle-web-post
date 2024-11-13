@@ -17,9 +17,9 @@ $posts = $statment->fetchAll(PDO::FETCH_ASSOC);
 
 // var_dump($posts);
 
-foreach ($posts as $post) {
-    echo '<li>' . $post['title'] . '</li>';
-}
+// foreach ($posts as $post) {
+//     echo '<li>' . $post['title'] . '</li>';
+// }
 
 ?>
 
@@ -59,7 +59,7 @@ foreach ($posts as $post) {
                     <a class="nav-link" href="#">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="post.html">Create Post</a>
+                    <a class="nav-link" href="post.php">Create Post</a>
                 </li>
             </ul>
         </div>
@@ -75,9 +75,9 @@ foreach ($posts as $post) {
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo $post['title']?></h5>
-                            <h6 class="card-subtitle mb-2 text-muted">SubTitulo</h6>
-                            <p class="card-text">Descrição do texto</p>
+                            <h5 class="card-title"><?php echo htmlspecialchars($post['title']) ?></h5>
+                            <h6 class="card-subtitle mb-2 text-muted"><?= $post['creation_time'] ?></h6>
+                            <p class="card-text"><?= htmlspecialchars($post['description']) ?></p>
                             <button type="button" class="btn btn-outline-primary">
                                 visualizar
                             </button>
