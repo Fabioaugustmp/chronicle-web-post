@@ -1,5 +1,19 @@
-<?php 
+<?php
+require 'Database.php';
 
+$db = new Database();
+$isUpdate = false;
+if (isset($_GET) && isset($_GET['update'])) {
+    $id = $_GET['update'];
+    $isUpdate = true;
+
+    $post = $db->query(
+        "SELECT * FROM posts p WHERE p.id = :id ",
+        [
+            "id" => $id
+        ]
+    )->fetch();
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,14 +59,28 @@
                         <h4 class="mb-0">Criar novo post</h4>
                     </div>
                     <div class="card-body">
-                        <form action="create-post.php" method="POST">
-                            <div class="form-group">
+                        <form action="<?= $isUpdate ?
+                          'update-post.php' : 
+                          'create-post.php'?>" method="POST">
+                          <input type="text" name="id" hidden value="<?=
+                                                                                                                                                        $isUpdate
+                                                                                                                                                            ? $post['id']
+                                                                                                                                                            : '' ?>">
+                            <div class="form-group">            
                                 <label for="title">Título</label>
-                                <input type="text" id="title" name="title" class="form-control" placeholder="Adicione um título a sua postagem" required>
+                                <input type="text" id="title" name="title" class="form-control" placeholder="Adicione um título a sua postagem" value="<?=
+                                                                                                                                                        isset($post['title'])
+                                                                                                                                                            ? $post['title']
+                                                                                                                                                            : '' ?>" required>
                             </div>
                             <div class="form-group">
                                 <label for="description">Descrição</label>
-                                <textarea id="description" name="description" class="form-control" rows="4" placeholder="Adicione uma descrição sua postagem" required></textarea>
+                                <textarea id="description" name="description" class="form-control" rows="4" placeholder="Adicione uma descrição sua postagem" required>
+                                <?=
+                                isset($post['description'])
+                                    ? $post['description']
+                                    : '' ?>
+                                </textarea>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Submit Post</button>
                         </form>

@@ -1,25 +1,9 @@
 <?php
+require 'Database.php';
 
-//Conexão com banco de dados
-$dsn = "mysql:host=localhost;port=3308;
-dbname=chronicle_db;user=root;password=root;
-charset=utf8mb4";
-
-//Criar a instância de conexão
-$pdo = new PDO($dsn);
-
-//Prepara a consulta (QUERY SQL)
-$statment = $pdo->prepare('SELECT * FROM posts;');
-//De fato executa a consulta no banco
-$statment->execute();
+$db = new Database();
 //Retorna e busca o resultado do banco
-$posts = $statment->fetchAll(PDO::FETCH_ASSOC);
-
-// var_dump($posts);
-
-// foreach ($posts as $post) {
-//     echo '<li>' . $post['title'] . '</li>';
-// }
+$posts = $db->query("SELECT * FROM posts pt;")->fetchAll();
 
 ?>
 
@@ -81,6 +65,9 @@ $posts = $statment->fetchAll(PDO::FETCH_ASSOC);
                             <button type="button" class="btn btn-outline-primary">
                                 visualizar
                             </button>
+                            <a class="btn btn-outline-warning" 
+                            href="/post.php?update=<?= $post['id']?>">
+                            editar</a>
                         </div>
                     </div>
                 </div>
