@@ -48,4 +48,48 @@ INSERT INTO posts (title, description) VALUES
   ```sql 
     SELECT * FROM posts;
 ```
+
+7. **Crie a tabela usuários**
+
+  ```sql 
+    CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    creation_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
   
+7.1 ***Relacione as tabelas entre usuários e posts***
+
+  ```sql 
+UPDATE posts 
+SET user_id = 1; -- Replace '1' with a valid user ID from the `users` table
+
+```
+7.2 ***Faça a adição dos dados essenciais***
+
+```sql
+  INSERT INTO users (username, email, password_hash) VALUES 
+('admin', 'admin@example.com', 'hashsenha1'),
+('editor', 'editor@example.com', 'hashsenha2'),
+('viewer', 'viewer@example.com', 'hashsenha3');
+```
+
+7.3 ***Altere a relação entre as tabelas***
+```sql
+ALTER TABLE posts 
+ADD CONSTRAINT fk_user_id 
+FOREIGN KEY (user_id) REFERENCES users(id) 
+ON DELETE CASCADE;
+```
+
+7.4 ***Execute a relação entre usuários e posts***
+
+```sql
+UPDATE posts SET user_id = 1 WHERE id = 1; -- Admin cria o primeiro post
+UPDATE posts SET user_id = 2 WHERE id = 2; -- Editor cria o segundo post
+UPDATE posts SET user_id = 3 WHERE id = 3; -- Viewer cria o terceiro post
+```
+
